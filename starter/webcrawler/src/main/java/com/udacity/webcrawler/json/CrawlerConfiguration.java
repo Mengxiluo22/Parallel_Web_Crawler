@@ -172,7 +172,7 @@ public final class CrawlerConfiguration {
    * <p>See {@link com.udacity.webcrawler.json.CrawlResult}.
    * @return
    */
-  public Writer getResultPath() {
+  public String getResultPath() {
     return resultPath;
   }
 

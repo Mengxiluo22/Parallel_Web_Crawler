@@ -13,6 +13,7 @@ import com.udacity.webcrawler.profiler.ProfilerModule;
 
 import javax.inject.Inject;
 import java.io.BufferedWriter;
+import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.nio.file.Path;
@@ -34,17 +35,14 @@ public final class WebCrawlerMain {
 
   private void run() throws Exception {
     Guice.createInjector(new WebCrawlerModule(config), new ProfilerModule()).injectMembers(this);
-
     CrawlResult result = crawler.crawl(config.getStartPages());
     CrawlResultWriter resultWriter = new CrawlResultWriter(result);
     // TODO: Write the crawl results to a JSON file (or System.out if the file name is empty)
-    if (config.getResultPath().equals("")){
+    if (config.getResultPath().isBlank()){
       resultWriter.write(new OutputStreamWriter(System.out));
     }
     else{
-      Writer path = config.getResultPath();
-      resultWriter.write(path);
-
+      resultWriter.write(Path.of(config.getResultPath()));
     }
 
 
